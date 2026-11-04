@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: footprint
+          POSTGRES_USER: footprint
+          POSTGRES_PASSWORD: footprint
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U footprint"
+          --health-interval 5s
+          --health-retries 10
+
+    env:
+      POSTGRES_DB: footprint
+      POSTGRES_USER: footprint
+      POSTGRES_PASSWORD: footprint
+      POSTGRES_HOST: localhost
+      DJANGO_SECRET_KEY: ci-only-secret
+      DJANGO_DEBUG: "0"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint and format check (ruff)
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Security scan of our code (bandit)
+        run: bandit -c pyproject.toml -r .
+
+      - name: Check dependencies for known vulnerabilities (pip-audit)
+        run: pip-audit -r requirements.txt
+
+      - name: Django system checks
+        run: python manage.py check
+
+      - name: Check for missing migrations
+        run: python manage.py makemigrations --check --dry-run
+
+      - name: Run tests
+        run: python manage.py test

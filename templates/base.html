@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Footprint{% endblock %}</title>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <style>
+    :root { --bg:#f7f7f5; --fg:#1d1d1f; --muted:#5f6368; --accent:#2f6f4f; --card:#fff; }
+    body { margin:0; font-family: system-ui, sans-serif; background:var(--bg); color:var(--fg); line-height:1.5; }
+    header, main, footer { max-width: 760px; margin: 0 auto; padding: 16px; }
+    header { display:flex; align-items:center; gap:8px; font-weight:700; font-size:1.25rem; color:var(--accent); }
+    .card { background:var(--card); border-radius:12px; padding:20px; margin:16px 0; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+    button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 16px; font-size:1rem; cursor:pointer; }
+    .muted { color:var(--muted); }
+    footer { font-size:.85rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <header>👣 Footprint</header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer>Footprint · Final Year Project · NCI 2026/27</footer>
+</body>
+</html>

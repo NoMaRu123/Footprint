@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Show how you learned, not just what you made.</h1>
+  <p>Footprint lets students log their learning step by step, so there is a clear record that the work was done honestly over time.
+     Learners can then share a public portfolio link, with certificates and evidence, on their CV.</p>
+</div>
+
+<div class="card">
+  <h2>Coming next</h2>
+  <ul>
+    <li>Sign up and log in</li>
+    <li>Learning log entries (what I did, time spent, evidence)</li>
+    <li>Public portfolio page with a shareable link</li>
+    <li>"Ask my portfolio" AI questions</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>HTMX check</h2>
+  <p class="muted">This button asks the server for a small piece of HTML and swaps it in, without reloading the page.</p>
+  <button hx-get="{% url 'core:ping' %}" hx-target="#ping-result" hx-swap="innerHTML">Ask the server</button>
+  <p id="ping-result"></p>
+</div>
+{% endblock %}

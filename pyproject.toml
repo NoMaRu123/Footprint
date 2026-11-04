@@ -1,0 +1,15 @@
+[project]
+name = "footprint"
+version = "0.1.0"
+description = "Learning tracker and evidence portfolio (NCI Final Year Project)"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "DJ"]
+
+[tool.bandit]
+exclude_dirs = ["./core/tests", "./.venv"]
